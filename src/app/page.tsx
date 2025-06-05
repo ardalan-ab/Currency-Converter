@@ -19,6 +19,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [useManualRate, setUseManualRate] = useState(false);
   const [manualRate, setManualRate] = useState("");
+const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchRates = async () => {
@@ -57,28 +58,39 @@ export default function HomePage() {
 
 
 const convertCurrency = () => {
+  setError(""); 
+
   const selectedRate = useManualRate ? Number(manualRate) : rates?.[currency];
 
-  if (!selectedRate || isNaN(selectedRate)) return;
+  if (!selectedRate || isNaN(selectedRate) || selectedRate <= 0) {
+    setError("نرخ تبدیل نامعتبر است.");
+    return;
+  }
 
   const tomanVal = Number(toman);
   const foreignVal = Number(foreign);
 
-  // اگه فقط مقدار تومان وارد شده بود
+
+  if (toman && isNaN(tomanVal)) {
+    setError("مقدار تومان باید عدد باشد.");
+    return;
+  }
+  if (foreign && isNaN(foreignVal)) {
+    setError("مقدار ارز خارجی باید عدد باشد.");
+    return;
+  }
+
   if (toman && !foreign) {
     const result = tomanVal / selectedRate;
     setForeign(result.toFixed(2));
-  }
-  // اگه فقط مقدار ارزی وارد شده بود
-  else if (!toman && foreign) {
+  } else if (!toman && foreign) {
     const result = foreignVal * selectedRate;
     setToman(result.toFixed(0));
-  }
-  // اگه هر دو مقدار از قبل وجود داشتن (یعنی قبلاً یه تبدیل انجام شده)
-  else if (toman && foreign) {
-    // فقط یکی‌شو نگه می‌داریم، مثلاً تومن رو و بقیه رو باز محاسبه می‌کنیم
+  } else if (toman && foreign) {
     const result = tomanVal / selectedRate;
     setForeign(result.toFixed(2));
+  } else {
+    setError("لطفاً یکی از فیلدها را پر کنید.");
   }
 };
 
@@ -169,6 +181,11 @@ const convertCurrency = () => {
             />
           </div>
         )}
+{error && (
+  <div className="text-red-600 text-sm text-center border border-red-300 bg-red-50 p-2 rounded-xl">
+    {error}
+  </div>
+)}
 
         <button
           onClick={convertCurrency}
