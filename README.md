@@ -29,25 +29,20 @@
    ```bash
    git clone https://github.com/ardalan-ab/Currency-Converter.git
    cd Currency-Converter
-وابستگی‌ها را نصب کنید:
+2. وابستگی‌ها را نصب کنید:
+    ```bash
+    npm install
+ 
+3. پروژه را اجرا کنید:
+    ```bash
+    npm run dev
 
-bash
-Copy
-Edit
-npm install
-پروژه را اجرا کنید:
+4. مرورگر را باز کنید و به آدرس زیر بروید:
+    ```bash
+    http://localhost:3000
 
-bash
-Copy
-Edit
-npm run dev
-مرورگر را باز کنید و به آدرس زیر بروید:
-
-arduino
-Copy
-Edit
-http://localhost:3000
 👨‍💻 توسعه‌دهنده
-Ardalan Abdolahian
-GitHub پروفایل
+
+[Ardalan Abdolahian](https://github.com/ardalan-ab)
+
 
